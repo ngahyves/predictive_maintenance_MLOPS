@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Data & Models (Trop lourds pour Git)
+data/
+models/*.pkl
+models/registry/
+
+# Logs & Reports
+logs/*.log
+reports/drift_report.html
+
+# IDE
+.vscode/
+.ipynb_checkpoints/
+
+# MLflow
+mlflow.db
+mlruns/
