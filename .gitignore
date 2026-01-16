@@ -1,5 +1,6 @@
 # Python
 .venv/
+venv/ 
 __pycache__/
 *.pyc
 
@@ -19,3 +20,5 @@ reports/drift_report.html
 # MLflow
 mlflow.db
 mlruns/
+
+!config/

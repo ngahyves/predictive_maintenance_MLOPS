@@ -1,0 +1,18 @@
+paths:
+  raw_data_path: "data/raw/ai4i2020.csv"
+  processed_data_dir: "data/processed"
+  processor_path: "models/preprocessor.joblib"
+
+features:
+  target_col: "Machine failure"
+  num_features:
+    - "Air temperature [K]"
+    - "Process temperature [K]"
+    - "Rotational speed [rpm]"
+    - "Torque [Nm]"
+    - "Tool wear [min]"
+  cat_features:
+    - "Type"
+
+mlflow:
+  experiment_name: "Maintenance_Prediction_Experiment"
