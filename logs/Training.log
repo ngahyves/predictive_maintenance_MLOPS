@@ -1,0 +1,157 @@
+2026-01-19 21:46:27 | Training | INFO | Setting MLflow experiment: Maintenance_Prediction_Experiment
+2026-01-19 21:46:31 | Training | INFO | === Starting training of multiple models ===
+2026-01-19 21:46:31 | Training | INFO | Loading processed data from: data\processed\data_processed.joblib
+2026-01-19 21:46:31 | Training | INFO | Train shape: (8000, 6), Test shape: (2000, 6)
+2026-01-19 21:46:31 | Training | INFO | Building candidate models from config
+2026-01-19 21:46:31 | Training | INFO | === Training model: logreg ===
+2026-01-19 21:46:32 | Training | INFO | [logreg] Hyperparameters: {'class_weight': 'balanced', 'max_iter': 1000, 'n_jobs': -1}
+2026-01-19 21:46:32 | Training | INFO | [logreg] Fitting model...
+2026-01-19 21:46:32 | Training | INFO | [logreg] Model fitted successfully
+2026-01-19 21:46:32 | Training | INFO | [logreg] Predicting on test set...
+2026-01-19 21:46:32 | Training | INFO | [logreg] F1-micro: 0.1263
+2026-01-19 21:46:32 | Training | INFO | [logreg] F1-macro: 0.2781
+2026-01-19 21:46:32 | Training | INFO | [logreg] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.05      0.91      0.09        11
+           1       0.20      1.00      0.33        17
+           2       0.28      1.00      0.44        20
+           3       0.35      1.00      0.52        18
+           4       0.00      0.17      0.00         6
+
+   micro avg       0.07      0.92      0.13        72
+   macro avg       0.18      0.82      0.28        72
+weighted avg       0.22      0.92      0.35        72
+ samples avg       0.02      0.03      0.02        72
+
+2026-01-19 21:46:44 | Training | INFO | New best model: logreg with F1-macro=0.2781
+2026-01-19 21:46:44 | Training | INFO | === Training model: random_forest ===
+2026-01-19 21:46:44 | Training | INFO | [random_forest] Hyperparameters: {'class_weight': 'balanced', 'n_estimators': 300, 'max_depth': None, 'random_state': 42, 'n_jobs': -1}
+2026-01-19 21:46:44 | Training | INFO | [random_forest] Fitting model...
+2026-01-19 21:46:48 | Training | INFO | [random_forest] Model fitted successfully
+2026-01-19 21:46:48 | Training | INFO | [random_forest] Predicting on test set...
+2026-01-19 21:46:48 | Training | INFO | [random_forest] F1-micro: 0.6250
+2026-01-19 21:46:48 | Training | INFO | [random_forest] F1-macro: 0.4428
+2026-01-19 21:46:48 | Training | INFO | [random_forest] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        11
+           1       0.92      0.65      0.76        17
+           2       0.81      0.65      0.72        20
+           3       0.92      0.61      0.73        18
+           4       0.00      0.00      0.00         6
+
+   micro avg       0.88      0.49      0.62        72
+   macro avg       0.53      0.38      0.44        72
+weighted avg       0.67      0.49      0.56        72
+ samples avg       0.02      0.02      0.02        72
+
+2026-01-19 21:46:54 | Training | INFO | New best model: random_forest with F1-macro=0.4428
+2026-01-19 21:46:54 | Training | INFO | === Training model: xgboost ===
+2026-01-19 21:46:54 | Training | INFO | [xgboost] Hyperparameters: {'objective': 'binary:logistic', 'eval_metric': 'logloss', 'n_estimators': 300, 'learning_rate': 0.1, 'max_depth': 6, 'subsample': 0.8, 'colsample_bytree': 0.8, 'n_jobs': -1}
+2026-01-19 21:46:54 | Training | INFO | [xgboost] Fitting model...
+2026-01-19 21:46:57 | Training | INFO | [xgboost] Model fitted successfully
+2026-01-19 21:46:57 | Training | INFO | [xgboost] Predicting on test set...
+2026-01-19 21:46:57 | Training | INFO | [xgboost] F1-micro: 0.7000
+2026-01-19 21:46:57 | Training | INFO | [xgboost] F1-macro: 0.5398
+2026-01-19 21:46:57 | Training | INFO | [xgboost] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.18      0.29        11
+           1       1.00      0.82      0.90        17
+           2       0.81      0.65      0.72        20
+           3       0.87      0.72      0.79        18
+           4       0.00      0.00      0.00         6
+
+   micro avg       0.88      0.58      0.70        72
+   macro avg       0.67      0.48      0.54        72
+weighted avg       0.78      0.58      0.65        72
+ samples avg       0.02      0.02      0.02        72
+
+2026-01-19 21:47:03 | Training | INFO | New best model: xgboost with F1-macro=0.5398
+2026-01-19 21:47:03 | Training | INFO | Best model is: xgboost with F1-macro=0.5398
+2026-01-19 21:47:03 | Training | INFO | Saving best model to: models\best_model.joblib
+2026-01-19 21:47:03 | Training | INFO | === Training of all models completed ===
+2026-01-19 22:00:39 | Training | INFO | Setting MLflow experiment: Maintenance_Prediction_Experiment
+2026-01-19 22:00:42 | Training | INFO | === Starting training of multiple models ===
+2026-01-19 22:00:42 | Training | INFO | Loading processed data from: data\processed\data_processed.joblib
+2026-01-19 22:00:42 | Training | INFO | Train shape: (8000, 6), Test shape: (2000, 6)
+2026-01-19 22:00:42 | Training | INFO | Building candidate models from config
+2026-01-19 22:00:42 | Training | INFO | === Training model: logreg ===
+2026-01-19 22:00:43 | Training | INFO | [logreg] Hyperparameters: {'class_weight': 'balanced', 'max_iter': 1000, 'n_jobs': -1}
+2026-01-19 22:00:43 | Training | INFO | [logreg] Fitting model...
+2026-01-19 22:00:43 | Training | INFO | [logreg] Model fitted successfully
+2026-01-19 22:00:43 | Training | INFO | [logreg] Predicting probabilities...
+2026-01-19 22:00:43 | Training | INFO | [logreg] AP-micro: 0.4940
+2026-01-19 22:00:43 | Training | INFO | [logreg] AP-macro: 0.4673
+2026-01-19 22:00:43 | Training | INFO | [logreg] AP per label: {'TWF': 0.18535734677962057, 'HDF': 0.6464680852482501, 'PWF': 0.7578435197313916, 'OSF': 0.7435609381954411, 'RNF': 0.0032414507694223066}
+2026-01-19 22:00:44 | Training | INFO | [logreg] F1-micro: 0.1263
+2026-01-19 22:00:44 | Training | INFO | [logreg] F1-macro: 0.2781
+2026-01-19 22:00:44 | Training | INFO | [logreg] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.05      0.91      0.09        11
+           1       0.20      1.00      0.33        17
+           2       0.28      1.00      0.44        20
+           3       0.35      1.00      0.52        18
+           4       0.00      0.17      0.00         6
+
+   micro avg       0.07      0.92      0.13        72
+   macro avg       0.18      0.82      0.28        72
+weighted avg       0.22      0.92      0.35        72
+ samples avg       0.02      0.03      0.02        72
+
+2026-01-19 22:00:57 | Training | INFO | New best model: logreg with AP-micro=0.4940
+2026-01-19 22:00:57 | Training | INFO | === Training model: random_forest ===
+2026-01-19 22:00:57 | Training | INFO | [random_forest] Hyperparameters: {'class_weight': 'balanced', 'n_estimators': 300, 'max_depth': None, 'random_state': 42, 'n_jobs': -1}
+2026-01-19 22:00:58 | Training | INFO | [random_forest] Fitting model...
+2026-01-19 22:01:03 | Training | INFO | [random_forest] Model fitted successfully
+2026-01-19 22:01:03 | Training | INFO | [random_forest] Predicting probabilities...
+2026-01-19 22:01:03 | Training | INFO | [random_forest] AP-micro: 0.6778
+2026-01-19 22:01:03 | Training | INFO | [random_forest] AP-macro: 0.5473
+2026-01-19 22:01:03 | Training | INFO | [random_forest] AP per label: {'TWF': 0.18349036648101671, 'HDF': 0.9022012138188609, 'PWF': 0.7978595426331495, 'OSF': 0.849543041854423, 'RNF': 0.003169344042838019}
+2026-01-19 22:01:04 | Training | INFO | [random_forest] F1-micro: 0.6250
+2026-01-19 22:01:04 | Training | INFO | [random_forest] F1-macro: 0.4428
+2026-01-19 22:01:04 | Training | INFO | [random_forest] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        11
+           1       0.92      0.65      0.76        17
+           2       0.81      0.65      0.72        20
+           3       0.92      0.61      0.73        18
+           4       0.00      0.00      0.00         6
+
+   micro avg       0.88      0.49      0.62        72
+   macro avg       0.53      0.38      0.44        72
+weighted avg       0.67      0.49      0.56        72
+ samples avg       0.02      0.02      0.02        72
+
+2026-01-19 22:01:12 | Training | INFO | New best model: random_forest with AP-micro=0.6778
+2026-01-19 22:01:12 | Training | INFO | === Training model: xgboost ===
+2026-01-19 22:01:12 | Training | INFO | [xgboost] Hyperparameters: {'objective': 'binary:logistic', 'eval_metric': 'logloss', 'n_estimators': 300, 'learning_rate': 0.1, 'max_depth': 6, 'subsample': 0.8, 'colsample_bytree': 0.8, 'n_jobs': -1}
+2026-01-19 22:01:12 | Training | INFO | [xgboost] Fitting model...
+2026-01-19 22:01:14 | Training | INFO | [xgboost] Model fitted successfully
+2026-01-19 22:01:14 | Training | INFO | [xgboost] Predicting probabilities...
+2026-01-19 22:01:14 | Training | INFO | [xgboost] AP-micro: 0.7492
+2026-01-19 22:01:14 | Training | INFO | [xgboost] AP-macro: 0.6127
+2026-01-19 22:01:14 | Training | INFO | [xgboost] AP per label: {'TWF': 0.27486218500990006, 'HDF': 0.9911764705882353, 'PWF': 0.8914563022702409, 'OSF': 0.9025432341995809, 'RNF': 0.003371399070150353}
+2026-01-19 22:01:15 | Training | INFO | [xgboost] F1-micro: 0.7000
+2026-01-19 22:01:15 | Training | INFO | [xgboost] F1-macro: 0.5398
+2026-01-19 22:01:15 | Training | INFO | [xgboost] Classification report:
+              precision    recall  f1-score   support
+
+           0       0.67      0.18      0.29        11
+           1       1.00      0.82      0.90        17
+           2       0.81      0.65      0.72        20
+           3       0.87      0.72      0.79        18
+           4       0.00      0.00      0.00         6
+
+   micro avg       0.88      0.58      0.70        72
+   macro avg       0.67      0.48      0.54        72
+weighted avg       0.78      0.58      0.65        72
+ samples avg       0.02      0.02      0.02        72
+
+2026-01-19 22:01:20 | Training | INFO | New best model: xgboost with AP-micro=0.7492
+2026-01-19 22:01:20 | Training | INFO | Best model is: xgboost with AP-micro=0.7492
+2026-01-19 22:01:20 | Training | INFO | Saving best model to: models\best_model.joblib
+2026-01-19 22:01:20 | Training | INFO | === Training of all models completed ===

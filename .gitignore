@@ -1,24 +1,21 @@
 # Python
-.venv/
-venv/ 
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.pkl
 
-# Data & Models (Trop lourds pour Git)
-data/
-models/*.pkl
-models/registry/
+# Virtual environment
+venv/
+.env/
 
-# Logs & Reports
-logs/*.log
-reports/drift_report.html
+# Data
+data/raw/
+data/processed/
 
-# IDE
-.vscode/
-.ipynb_checkpoints/
-
-# MLflow
-mlflow.db
+# Models
+models/*.joblib
 mlruns/
 
-!config/
+# VS Code
+.vscode/

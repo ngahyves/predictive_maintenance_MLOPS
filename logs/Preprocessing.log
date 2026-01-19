@@ -1,0 +1,42 @@
+2026-01-19 21:14:21 | Preprocessing | INFO | Initializing Preprocessor...
+2026-01-19 21:14:21 | Preprocessing | INFO | Target columns: ['TWF', 'HDF', 'PWF', 'OSF', 'RNF']
+2026-01-19 21:14:21 | Preprocessing | INFO | Numerical features: ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+2026-01-19 21:14:21 | Preprocessing | INFO | Categorical features: ['Type']
+2026-01-19 21:14:21 | Preprocessing | INFO | === Starting multilabel preprocessing ===
+2026-01-19 21:14:21 | Preprocessing | INFO | Loading raw data from: data/raw/ai4i2020.csv
+2026-01-19 21:14:22 | Preprocessing | INFO | Raw data loaded. Shape: (10000, 14)
+2026-01-19 21:14:22 | Preprocessing | INFO | Cleaning data: removing duplicates and unused columns
+2026-01-19 21:14:22 | Preprocessing | INFO | Removed 0 duplicates
+2026-01-19 21:14:22 | Preprocessing | INFO | Remaining columns: ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'TWF', 'HDF', 'PWF', 'OSF', 'RNF']
+2026-01-19 21:14:22 | Preprocessing | INFO | Splitting data into train/test sets (multilabel)
+2026-01-19 21:14:22 | Preprocessing | INFO | Train size: (8000, 6), Test size: (2000, 6)
+2026-01-19 21:14:22 | Preprocessing | INFO | Building preprocessing pipeline...
+2026-01-19 21:14:22 | Preprocessing | INFO | Preprocessing pipeline successfully built.
+2026-01-19 21:14:22 | Preprocessing | INFO | Fitting preprocessor on training data...
+2026-01-19 21:14:22 | Preprocessing | INFO | Training data transformed. Shape: (8000, 6)
+2026-01-19 21:14:22 | Preprocessing | INFO | Transforming test data...
+2026-01-19 21:14:22 | Preprocessing | INFO | Test data transformed. Shape: (2000, 6)
+2026-01-19 21:14:22 | Preprocessing | INFO | Saving preprocessor to: models\preprocessor.joblib
+2026-01-19 21:14:22 | Preprocessing | INFO | Saving processed datasets to: data\processed
+2026-01-19 21:14:22 | Preprocessing | INFO | === Preprocessing completed successfully ===
+2026-01-19 23:45:32 | Preprocessing | INFO | Initializing Preprocessor...
+2026-01-19 23:45:32 | Preprocessing | INFO | Target columns: ['TWF', 'HDF', 'PWF', 'OSF', 'RNF']
+2026-01-19 23:45:32 | Preprocessing | INFO | Numerical features: ['Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]']
+2026-01-19 23:45:32 | Preprocessing | INFO | Categorical features: ['Type']
+2026-01-19 23:45:32 | Preprocessing | INFO | === Starting multilabel preprocessing ===
+2026-01-19 23:45:32 | Preprocessing | INFO | Loading raw data from: data/raw/ai4i2020.csv
+2026-01-19 23:45:32 | Preprocessing | INFO | Raw data loaded. Shape: (10000, 14)
+2026-01-19 23:45:32 | Preprocessing | INFO | Cleaning data: removing duplicates and unused columns
+2026-01-19 23:45:32 | Preprocessing | INFO | Removed 0 duplicates
+2026-01-19 23:45:32 | Preprocessing | INFO | Remaining columns: ['Type', 'Air temperature [K]', 'Process temperature [K]', 'Rotational speed [rpm]', 'Torque [Nm]', 'Tool wear [min]', 'TWF', 'HDF', 'PWF', 'OSF', 'RNF']
+2026-01-19 23:45:32 | Preprocessing | INFO | Splitting data into train/test sets (multilabel)
+2026-01-19 23:45:32 | Preprocessing | INFO | Train size: (8000, 6), Test size: (2000, 6)
+2026-01-19 23:45:32 | Preprocessing | INFO | Building preprocessing pipeline...
+2026-01-19 23:45:32 | Preprocessing | INFO | Preprocessing pipeline successfully built.
+2026-01-19 23:45:32 | Preprocessing | INFO | Fitting preprocessor on training data...
+2026-01-19 23:45:33 | Preprocessing | INFO | Training data transformed. Shape: (8000, 6)
+2026-01-19 23:45:33 | Preprocessing | INFO | Transforming test data...
+2026-01-19 23:45:33 | Preprocessing | INFO | Test data transformed. Shape: (2000, 6)
+2026-01-19 23:45:33 | Preprocessing | INFO | Saving preprocessor to: data\processed\preprocessor.joblib
+2026-01-19 23:45:33 | Preprocessing | INFO | Saving processed datasets to: data\processed
+2026-01-19 23:45:33 | Preprocessing | INFO | === Preprocessing completed successfully ===

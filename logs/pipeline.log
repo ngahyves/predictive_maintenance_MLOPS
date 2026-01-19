@@ -1,0 +1,6 @@
+2026-01-16 02:18:32 | Ingestion | INFO | Download file from: https://archive.ics.uci.edu/ml/machine-learning-databases/00601/ai4i2020.csv
+2026-01-16 02:18:35 | Ingestion | INFO | File downloaded and saved in: data\raw\ai4i2020.csv
+2026-01-16 02:18:35 | Ingestion | INFO | Data loaded into memory. Size: (10000, 14)
+2026-01-16 02:49:12 | Validation | ERROR | Error durinag validation : '<class 'pandera.api.checks.Check'>' object has no attribute 'range'. Make sure any custom checks have been registered using the extensions api.
+2026-01-16 02:51:13 | Validation | INFO | Validation of the contract...
+2026-01-16 02:51:14 | Validation | INFO | Validation passed.

@@ -1,0 +1,23 @@
+2026-01-19 23:28:02 | Prediction | INFO | Loading best model from: models\best_model.joblib
+2026-01-19 23:28:23 | Prediction | INFO | Model loaded successfully
+2026-01-19 23:28:23 | Prediction | INFO | Loading preprocessor from: data\processed\preprocessor.joblib
+2026-01-19 23:28:23 | Prediction | ERROR | Failed to load preprocessor: [Errno 2] No such file or directory: 'data\\processed\\preprocessor.joblib'
+2026-01-19 23:45:57 | Prediction | INFO | Loading best model from: models\best_model.joblib
+2026-01-19 23:45:59 | Prediction | INFO | Model loaded successfully
+2026-01-19 23:45:59 | Prediction | INFO | Loading preprocessor from: data\processed\preprocessor.joblib
+2026-01-19 23:46:00 | Prediction | INFO | Preprocessor loaded successfully
+2026-01-19 23:49:09 | Prediction | INFO | Loading best model from: models\best_model.joblib
+2026-01-19 23:49:11 | Prediction | INFO | Model loaded successfully
+2026-01-19 23:49:11 | Prediction | INFO | Loading preprocessor from: data\processed\preprocessor.joblib
+2026-01-19 23:49:11 | Prediction | INFO | Preprocessor loaded successfully
+2026-01-19 23:49:11 | Prediction | INFO | Loaded label columns: ['TWF', 'HDF', 'PWF', 'OSF', 'RNF']
+2026-01-19 23:49:11 | Prediction | INFO | Starting prediction process
+2026-01-19 23:49:11 | Prediction | DEBUG | Received input data: {'Air temperature [K]': 300, 'Process temperature [K]': 310, 'Rotational speed [rpm]': 1500, 'Torque [Nm]': 40, 'Tool wear [min]': 100, 'Type': 'L'}
+2026-01-19 23:49:11 | Prediction | INFO | Starting preprocessing of input data
+2026-01-19 23:49:11 | Prediction | DEBUG | Raw input converted to DataFrame: [{'Air temperature [K]': 300, 'Process temperature [K]': 310, 'Rotational speed [rpm]': 1500, 'Torque [Nm]': 40, 'Tool wear [min]': 100, 'Type': 'L'}]
+2026-01-19 23:49:11 | Prediction | INFO | Preprocessing completed successfully
+2026-01-19 23:49:11 | Prediction | INFO | Predicting probabilities...
+2026-01-19 23:49:11 | Prediction | DEBUG | Predicted probabilities: [[2.480750026734313e-06, 4.33123204857111e-06, 1.4062032278161496e-05, 9.052762948158488e-07, 8.999393685371615e-06]]
+2026-01-19 23:49:11 | Prediction | INFO | Converting probabilities to binary predictions (threshold=0.5)
+2026-01-19 23:49:11 | Prediction | DEBUG | Binary predictions: [[0, 0, 0, 0, 0]]
+2026-01-19 23:49:11 | Prediction | INFO | Prediction completed successfully: {'TWF': 0, 'HDF': 0, 'PWF': 0, 'OSF': 0, 'RNF': 0}

@@ -1,130 +1,127 @@
+#Import libaries
 import pandas as pd
-import numpy as np
 import joblib
 from pathlib import Path
-from typing import Tuple
-
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
-from imblearn.pipeline import Pipeline # Pipeline qui supporte le SMOTE
-from imblearn.over_sampling import SMOTE
+from sklearn.pipeline import Pipeline
 from src.utils.logger import get_logger
+from src.utils.config_loader import load_config
+#Calling the logger
+logger = get_logger("Preprocessing")
 
+#Preprocessing pipeline class
 class Preprocessor:
     def __init__(self, config: dict, logger):
         self.config = config
         self.logger = logger
-        self.target = config.get("target_col", "Machine failure")
-        self.num_features = config.get("num_features", [])
-        self.cat_features = config.get("cat_features", ["Type"])
-        
-        # On définit les briques de base de la pipeline
-        self.full_pipeline = None
 
-    def load_data(self) -> pd.DataFrame:
-        self.logger.info(f"Chargement : {self.config['raw_data_path']}")
-        return pd.read_csv(self.config["raw_data_path"])
+        self.logger.info("Initializing Preprocessor...")
 
-    def clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Nettoyage : Doublons et colonnes inutiles."""
-        self.logger.info("Nettoyage des données.")
-        df = df.drop_duplicates()
-        # On ignore les colonnes de pannes spécifiques pour ne pas tricher (Data Leakage)
-        cols_to_drop = ["UDI", "Product ID", "TWF", "HDF", "PWF", "OSF", "RNF"]
-        df = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
+        # MULTILABEL TARGETS
+        self.target_cols = self.config["features"]["target_cols"]
+        self.logger.info(f"Target columns: {self.target_cols}")
+
+        self.num_features = self.config["features"]["num_features"]
+        self.cat_features = self.config["features"]["cat_features"]
+
+        self.logger.info(f"Numerical features: {self.num_features}")
+        self.logger.info(f"Categorical features: {self.cat_features}")
+
+        self.processor_path = Path(self.config["paths"]["processor_path"])
+        self.processed_dir = Path(self.config["paths"]["processed_data_dir"])
+
+        self.preprocessor = None
+
+    def load_data(self):
+        path = self.config["paths"]["save_path"]
+        self.logger.info(f"Loading raw data from: {path}")
+        df = pd.read_csv(path)
+        self.logger.info(f"Raw data loaded. Shape: {df.shape}")
         return df
 
-    def split_data(self, df: pd.DataFrame):
-        """Split Train/Test."""
-        self.logger.info("Split des données (Stratifié).")
-        X = df.drop(columns=[self.target])
-        y = df[self.target]
-        return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    def clean_data(self, df):
+        self.logger.info("Cleaning data: removing duplicates and unused columns")
+        before = df.shape[0]
+        df = df.drop_duplicates()
+        after = df.shape[0]
+        self.logger.info(f"Removed {before - after} duplicates")
+
+        df = df.drop(columns=["UDI", "Product ID", "Machine failure"], errors="ignore")
+        self.logger.info(f"Remaining columns: {list(df.columns)}")
+        return df
+
+    def split_data(self, df):
+        self.logger.info("Splitting data into train/test sets (multilabel)")
+        X = df.drop(columns=self.target_cols)
+        y = df[self.target_cols]
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42
+        )
+
+        self.logger.info(f"Train size: {X_train.shape}, Test size: {X_test.shape}")
+        return X_train, X_test, y_train, y_test
 
     def build_pipeline(self):
-        """
-        Définit la logique de transformation. 
-        On utilise SimpleImputer pour garantir la robustesse.
-        """
-        self.logger.info("Construction de la Pipeline (Imputer + Scaler + Encoder).")
-        
-        # Pipeline Numérique
+        self.logger.info("Building preprocessing pipeline...")
+
         num_transformer = Pipeline([
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler())
         ])
 
-        # Pipeline Catégorielle
         cat_transformer = Pipeline([
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("encoder", OrdinalEncoder(categories=[["L", "M", "H"]]))
+            ("encoder", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1))
         ])
 
-        # ColumnTransformer pour assembler les deux
-        preprocessor = ColumnTransformer([
+        self.preprocessor = ColumnTransformer([
             ("num", num_transformer, self.num_features),
             ("cat", cat_transformer, self.cat_features)
         ])
 
-        # Pipeline finale avec SMOTE (uniquement pour le fit)
-        self.full_pipeline = Pipeline([
-            ("preprocessor", preprocessor),
-            ("smote", SMOTE(random_state=42))
-        ])
-
-    def save_transformer(self):
-        """Sauvegarde uniquement l'objet de transformation pour l'API."""
-        path = Path(self.config["processor_path"])
-        path.parent.mkdir(parents=True, exist_ok=True)
-        # On ne sauvegarde que la partie 'preprocessor', pas le SMOTE !
-        joblib.dump(self.full_pipeline.named_steps["preprocessor"], path)
-        self.logger.info(f"Transformateur sauvegardé dans {path}")
-
-    def save_processed_data(self, X_train, X_test, y_train, y_test):
-        """Sauvegarde les données finales prêtes pour l'entraînement."""
-        path = Path(self.config["processed_data_dir"])
-        path.mkdir(parents=True, exist_ok=True)
-        joblib.dump((X_train, X_test, y_train, y_test), path / "data_cleaned.joblib")
-        self.logger.info("Données d'entraînement sauvegardées.")
+        self.logger.info("Preprocessing pipeline successfully built.")
 
     def run(self):
-        """Orchestrateur conforme à ta demande."""
-        self.logger.info("--- Démarrage Preprocessing ---")
-        
-        # 1. Chargement & Nettoyage
+        self.logger.info("=== Starting multilabel preprocessing ===")
+
         df = self.load_data()
         df = self.clean_data(df)
-        
-        # 2. Split
+
         X_train, X_test, y_train, y_test = self.split_data(df)
-        
-        # 3. Build & Fit (avec SMOTE et Imputer)
+
         self.build_pipeline()
-        
-        self.logger.info("Application Fit & Resample (SMOTE)...")
-        # fit_resample applique le preprocessor PUIS le SMOTE sur le train
-        X_train_res, y_train_res = self.full_pipeline.fit_resample(X_train, y_train)
-        
-        # 4. Transformation du test (SANS SMOTE)
-        X_test_transformed = self.full_pipeline.named_steps["preprocessor"].transform(X_test)
-        
-        # 5. Sauvegardes
-        self.save_transformer()
-        self.save_processed_data(X_train_res, X_test_transformed, y_train_res, y_test)
-        
-        self.logger.info("--- Preprocessing Terminé ---")
-        return X_train_res, X_test_transformed, y_train_res, y_test
+
+        self.logger.info("Fitting preprocessor on training data...")
+        X_train_transformed = self.preprocessor.fit_transform(X_train)
+        self.logger.info(f"Training data transformed. Shape: {X_train_transformed.shape}")
+
+        self.logger.info("Transforming test data...")
+        X_test_transformed = self.preprocessor.transform(X_test)
+        self.logger.info(f"Test data transformed. Shape: {X_test_transformed.shape}")
+
+        # Save preprocessor
+        self.logger.info(f"Saving preprocessor to: {self.processor_path}")
+        self.processor_path.parent.mkdir(parents=True, exist_ok=True)
+        joblib.dump(self.preprocessor, self.processor_path)
+
+        # Save processed data
+        self.logger.info(f"Saving processed datasets to: {self.processed_dir}")
+        self.processed_dir.mkdir(parents=True, exist_ok=True)
+        joblib.dump(
+            (X_train_transformed, X_test_transformed, y_train, y_test),
+            self.processed_dir / "data_processed.joblib"
+        )
+
+        self.logger.info("=== Preprocessing completed successfully ===")
+
+        return X_train_transformed, X_test_transformed, y_train, y_test
 
 if __name__ == "__main__":
-    conf = {
-        "raw_data_path": "data/raw/ai4i2020.csv",
-        "processed_data_dir": "data/processed",
-        "processor_path": "models/preprocessor.joblib",
-        "num_features": ["Air temperature [K]", "Process temperature [K]", "Rotational speed [rpm]", "Torque [Nm]", "Tool wear [min]"],
-        "cat_features": ["Type"]
-    }
-    logger = get_logger("Preprocessing")
-    preprocessor = Preprocessor(conf, logger)
+    config = load_config()
+    preprocessor = Preprocessor(config, logger)
     preprocessor.run()
+

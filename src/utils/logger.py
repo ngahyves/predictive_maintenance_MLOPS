@@ -7,15 +7,13 @@ def get_logger(name: str):
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
 
-    # 1. Defining the logger
-    logger = logging.getLogger(name)
+    #1-Main log
+    logger=logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
     
     # 2. Avoid duplicates
     if logger.hasHandlers():
         return logger
-
-    # Setting the level of logs
-    logger.setLevel(logging.DEBUG)
 
     # 3. Setting the format
     formatter = logging.Formatter(
@@ -26,13 +24,13 @@ def get_logger(name: str):
     # 4. Level of logging in the terminal
     ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.INFO)
-    ch.setFormatter(formatter) # Correction typo setFormatter
+    ch.setFormatter(formatter) # Correction type setFormatter
 
     # 5. Rotating File Handler
     fh = RotatingFileHandler(
-        log_dir / "pipeline.log",
-        maxBytes=1_000_000, # 1 Mo par fichier
-        backupCount=5       # Garde les 5 derniers fichiers
+        log_dir / f"{name}.log",
+        maxBytes=1_000_000, # 1 Mo by file
+        backupCount=5       # Save last 5 files
     )
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
